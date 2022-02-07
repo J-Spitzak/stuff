@@ -99,7 +99,7 @@ def fact(n):
     sum = 1
     for i in range(1,n + 1):
         print(i)
-        thingy = n - i
+        sum *= i
     return sum
     
 print(fact(4))
