@@ -101,5 +101,3 @@ def fact(n):
         print(i)
         sum *= i
     return sum
-    
-print(fact(4))
