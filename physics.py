@@ -30,12 +30,16 @@ class particle:
     
     def draw(self):
         pg.draw.rect(WIN, WHITE, pg.Rect(self.x - self.width, self.y - self.width, self.x + self.width, self.y + self.width))
+        pg.draw.rect(WIN, WHITE, pg.Rect(SCREEN_WIDTH / 2 - self.width, SCREEN_HEIGHT / 2 - self.width, self.width, self.width))
+        pg.draw.rect(WIN, WHITE, pg.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,10,10))
+        #print("helo")
     
 par = particle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 5)
 
 def draw_square():
     pg.draw.rect(WIN, WHITE, pg.Rect(CUBE_OFFSET, CUBE_OFFSET, (SCREEN_WIDTH - (2 * CUBE_OFFSET)), (SCREEN_HEIGHT - (2 * CUBE_OFFSET))))
     pg.draw.rect(WIN, BLACK, pg.Rect(CUBE_OFFSET + CUBE_WIDTH, CUBE_OFFSET + CUBE_WIDTH, (SCREEN_WIDTH - (2 * CUBE_OFFSET + 2 * CUBE_WIDTH)), (SCREEN_HEIGHT - (2 * CUBE_OFFSET + 2 * CUBE_WIDTH))))
+    #pg.draw.rect(WIN, WHITE, pg.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,10,10))
 
 def main():
     WIN.fill(BLACK)
