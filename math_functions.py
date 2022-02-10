@@ -101,3 +101,23 @@ def fact(n):
         print(i)
         sum *= i
     return sum
+
+
+def add(*vectors): #vector addition, not addition though in theory that should still work if entered as a list/array
+    max = None
+    for vector in vectors:
+        if max == None:
+            max = len(vector)
+        elif len(vector) >= max:
+            max = len(vector)
+    final = []
+    for i in range(max):
+        final.append(0)
+    for vector in vectors:
+        ind = 0
+        for n in vector:
+            final[ind] = final[ind] + n
+            ind += 1
+    return final
+
+print(add([1],[2]))
