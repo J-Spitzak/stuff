@@ -119,5 +119,3 @@ def add(*vectors): #vector addition, not addition though in theory that should s
             final[ind] = final[ind] + n
             ind += 1
     return final
-
-print(add([1],[2]))
