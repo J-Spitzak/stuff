@@ -1,3 +1,7 @@
+from types import NoneType
+import math
+
+
 def absval(val, root = 0):
     if val >= root:
         return val - root
@@ -119,3 +123,9 @@ def add(*vectors): #vector addition, not addition though in theory that should s
             final[ind] = final[ind] + n
             ind += 1
     return final
+
+def qudratic(a,b,c):
+    d = b*b - 4*a*c
+    if d < 0:
+        return None
+    return [(-b + math.sqrt(d)) / 2*a,(-b - math.sqrt(d)) / 2*a]
