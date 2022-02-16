@@ -129,8 +129,8 @@ def qudratic(a,b,c):
     return [(-b + math.sqrt(d)) / 2*a,(-b - math.sqrt(d)) / 2*a]
 
 def prime(n): # a simpler and probably faster solution to primes as opposed to the solution I made on 15-24
-    for i in range(n):
+    for i in range(1,n):
         if n % i == 0:
-            if i != 0 and i != n:
+            if i != 1:
                 return False
     return True
