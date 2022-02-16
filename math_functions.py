@@ -1,6 +1,4 @@
-from types import NoneType
 import math
-
 
 def absval(val, root = 0):
     if val >= root:
@@ -129,3 +127,10 @@ def qudratic(a,b,c):
     if d < 0:
         return None
     return [(-b + math.sqrt(d)) / 2*a,(-b - math.sqrt(d)) / 2*a]
+
+def prime(n): # a simpler and probably faster solution to primes as opposed to the solution I made on 15-24
+    for i in range(n):
+        if n % i == 0:
+            if i != 0 and i != n:
+                return False
+    return True
