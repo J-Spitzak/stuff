@@ -1,4 +1,15 @@
 import pygame as pg
+import math
+
+class vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.vect = [0,0]
+        self.mag = math.sqrt((self.vect[0] ** 2) + (self.vect[1] ** 2))
+
+    def draw(self):
+        
 
 class field:
 
@@ -15,7 +26,5 @@ class field:
         self.color = self.BLACK
         self.win = pg.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT))
 
-
-
     def draw(self):
-        pass
+        self.win.fill(self.BLACK)
