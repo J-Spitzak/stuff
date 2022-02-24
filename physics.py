@@ -29,10 +29,13 @@ class particle:
         self.y -= self.final_force[1]
     
     def draw(self):
-        pg.draw.rect(WIN, WHITE, pg.Rect(self.x - self.width, self.y - self.width, self.x + self.width, self.y + self.width))
-        pg.draw.rect(WIN, WHITE, pg.Rect(SCREEN_WIDTH / 2 - self.width, SCREEN_HEIGHT / 2 - self.width, self.width, self.width))
-        pg.draw.rect(WIN, WHITE, pg.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,10,10))
-        #print("helo")
+        x_pos = self.x - self.width
+        y_pos = self.y - self.width
+        width = self.x + self.width
+        height = self.y + self.width
+        rectangle = pg.Rect(x_pos, y_pos, width, height)
+        pg.draw.rect(WIN, (255, 156, 143), pg.Rect(x_pos, y_pos, width, height))
+        
     
 par = particle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 5)
 
