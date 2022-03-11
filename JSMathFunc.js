@@ -72,19 +72,22 @@ function mean(numbs, int = False){
     }
 }
 
-/* dosn't work yet
 function mode(numbs){
-    var dict = {}
+    var dict = {};
     for (var i = 0; i < numbs.length; i++){
-        if i in dict.keys():
-            dict[i] += 1
-        else:
-            dict[i] = 1
+        if (dict.includes(numbs[i])){
+            dict[i] += 1;
+        }    
+        else{
+            dict[i] = 1;
+        }
     }
-
-    values = []
-    number = []
-    for key in dict:
-       values.append(dict[key])
-       number.append(key)
-}*/ 
+    //dict is now a dictionary with all of the numbers provided and a corresponding
+    //value saying how many times it appears 
+    var values = []; //all of the numbers
+    var number = []; // the numbers of each number (parrallel lists)
+    for (var i = 0; i < dict.length;i++){//key in dict:
+       values.append(dict[key]);
+       number.append(key);
+    }
+}
