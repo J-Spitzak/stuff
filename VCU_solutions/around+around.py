@@ -13,17 +13,15 @@ def solve(value_list, cordonite_list, sides):
     while sides > 0:
         for x in range(offset,offset + (sides - 1)): #top
             pos = cordonite_list.index([x,offset])
-
             final.append(value_list[pos])
             
         for y in range(offset,offset + (sides-1)): #right
             pos = cordonite_list.index([sides - (offset + 1),y])
-
             final.append(value_list[pos])
             
         temp = []
         for x in range(offset,offset + sides): #bottom
-            pos = cordonite_list.index([x,sides - 1])
+            pos = cordonite_list.index([x,offset + sides - 1])
             temp.append(value_list[pos])
         temp.reverse()
         for thing in temp:
