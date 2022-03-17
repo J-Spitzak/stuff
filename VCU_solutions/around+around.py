@@ -29,7 +29,7 @@ def solve(value_list, cordonite_list, sides):
 
         othtemp = []
         for y in range(offset + 1,offset + (sides - 2)): #left
-            pos = cordonite_list.index([0,y])
+            pos = cordonite_list.index([0,y]) 
             othtemp.append(value_list[pos])
         othtemp.reverse()
         for thingy in othtemp:
