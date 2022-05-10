@@ -114,19 +114,27 @@ class snake():
         self.moveBlocks()
         self.block_chainPass()
 
+
     def die(self):
         print("you lose")
         pg.quit()
         quit()
 
+
     def checkWall(self):
         if (self.body[0].x >= (WN_WIDTH // STEP)) or (self.body[0].x <= -1) or (self.body[0].y >= (WN_HEIGHT // STEP)) or (self.body[0].y <= -1):
             self.die()
+
 
     def got_apple(self):
         new_vec = invect(self.body[self.length - 1].direction)
         self.body.append(block(self.body[self.length - 1].x + new_vec[0], self.body[self.length - 1].y + new_vec[1],self.body[self.length - 1].direction))
         self.length += 1
+
+    def self_collosion(self):
+        for i in range(1,self.length):
+            if self.body[i].x == self.body[0].x and self.body[i].y == self.body[0].y:
+                self.die()
 
 
 snakey = snake(5,5)
@@ -137,6 +145,7 @@ def snakeStuff(tick):
     tick+=1
     if tick >= 5:
         snakey.move()
+        snakey.self_collosion()
         tick = 0
     snakey.draw()
     apple.check(snakey.body[0],snakey)

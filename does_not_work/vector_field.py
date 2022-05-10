@@ -29,7 +29,7 @@ class field:
             xs = {}
             for x in range(self.width):
                 heller = vector(x,y)
-                xs.append(str(x,y) : heller )
+                xs.append{str(x,y) : heller }
 
 
     def draw(self):
