@@ -5,7 +5,6 @@ import math
 
 BACKROUND_BLUE = (100,125,150)
 BACKROUND_GREEN = (20,50,35)
-GREEN = (5,200,50)
 RED = (200,20,20)
 
 WN_WIDTH = 1200
@@ -59,10 +58,14 @@ class block:
         self.y = y
         self.direction = vect
 
-    def draw(self):
+    def draw(self,s):
         stepped_x = self.x * STEP
         stepped_y = self.y * STEP
-        pg.draw.rect(WN, GREEN, (stepped_x,stepped_y,STEP,STEP))
+        fac = 5
+        if fac * s < 200:
+            pg.draw.rect(WN,(5,200 - fac * s,50), (stepped_x,stepped_y,STEP,STEP))
+        else:
+            pg.draw.rect(WN,(5,0,50), (stepped_x,stepped_y,STEP,STEP))
 
     def move(self):
         self.x += self.direction[0]
@@ -83,7 +86,8 @@ class snake():
             pg.draw.rect(WN, GREEN, (stepped_x,stepped_y,STEP,STEP))
             s+=1'''
         for block in self.body:
-            block.draw()
+            block.draw(s)
+            s+=1
         #print(s)
 
     def moveBlocks(self):
@@ -143,7 +147,7 @@ apple = apples()
 
 def snakeStuff(tick):
     tick+=1
-    if tick >= 5:
+    if tick >= 3:
         snakey.move()
         snakey.self_collosion()
         tick = 0
