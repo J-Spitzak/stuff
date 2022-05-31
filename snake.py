@@ -44,7 +44,6 @@ class apples():
 
     def check(self,head,snake):
         if head.x == self.x and head.y == self.y:
-            print("got-em")
             '''self.x = random.randint(0,math.floor(WN_WIDTH / STEP))
             self.y = random.randint(0,math.floor(WN_HEIGHT / STEP))'''
             self.new_pos()
@@ -120,7 +119,6 @@ class snake():
 
 
     def die(self):
-        print("you lose")
         pg.quit()
         quit()
 
