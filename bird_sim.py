@@ -1,4 +1,5 @@
 import time
+import math
 
 class NCurve():
 
@@ -17,6 +18,8 @@ class population():
         self.initial = initial_pop
         self.population = NCurve(initial_pop, mean, stddev)
         self.dependencies = []
+        self.predaDeck = 0
+        #predaDeck is predatory decrement and is calculated based on the zscore of it's predators
 
 
     def dependencies_calc(self):
@@ -28,6 +31,7 @@ class population():
             score = 0
             for dependency in dependencyType[0]:
                 score += dependency[0].population.Zscore() * dependency[1]
+                dependency[0].predaDeck += self.population.Zscore() * dependency[1] * self.population.stddev
                 #print(dependency[0].population.Zscore() , dependency[1])
             importance.append(dependencyType[1])
             #print(score, dependencyType[1])
@@ -38,10 +42,11 @@ class population():
         #print(importance)
         return final
 
-    def incrementD(self):
-        #incrementD increments based on the dependencies of the population
+    def increment(self):
         pop = self.population.num
-        self.population.num += (self.dependencies_calc() / 100) * self.population.stddev
+        self.population.num += math.floor((self.dependencies_calc() / 150) * self.population.stddev)
+        self.population.num -= math.floor(self.predaDeck / 20)
+        self.predaDeck = 0
         return pop
 
     def print(self, name = None):
@@ -123,7 +128,7 @@ class environment():
             new = self.populations
             extinct = []
             for population in new:
-                self.populations[population].incrementD()
+                self.populations[population].increment()
                 print(population,  ": " , self.populations[population].population.num)
                 if self.populations[population].population.num <= 0:
                     print(population, "went extinct")
