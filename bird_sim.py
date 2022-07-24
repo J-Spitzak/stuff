@@ -53,8 +53,8 @@ class environment():
         print("population number: ")
 
         populationsNum = int(input())
-        for _ in range(populationsNum - 1):
-            print(_ + 1, "nth population: name, number, mean, standard deviation")
+        for _ in range(populationsNum):
+            print(_, "nth population: name, number, mean, standard deviation")
             nm = str(input())
             #name ^
             self.populations[nm] = population(int(input()),int(input()),int(input()))
@@ -76,7 +76,7 @@ class environment():
                 newListing = [[],imp]
                 print("number of suppliers:")
                 supplierNum = int(input())
-                for supplier in range(supplierNum - 1):
+                for supplier in range(supplierNum):
                     print("supplier importance, name:")
                     supplierImp = int(input())
                     supplierName = str(input())
