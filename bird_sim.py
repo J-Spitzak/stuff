@@ -43,10 +43,22 @@ class population():
         self.population.num += (self.dependencies_calc() / 100) * self.population.stddev
         return pop
 
+    def print(self, name = None):
+        if name != None:
+            print(name, ":")
+        print("dependecies:", self.dependencies)
+        print("mean:", self.population.mean, "number:", self.population.num,"standard dev:", self.population.stddev)
+
 class environment():
 
     def __init__(self):
         self.populations = {}
+    
+    def printPop(self):
+        print(self.populations)
+        for i in self.populations.keys():
+            print(i, "=", self.populations[i].print( ))  
+
 
     def setup(self):
 
@@ -80,12 +92,13 @@ class environment():
                     print("supplier importance, name:")
                     supplierImp = int(input())
                     supplierName = str(input())
-                    newListing[0].append([supplierName, supplierImp])
+                    newListing[0].append([self.populations[supplierName], supplierImp])
                 listing.append(newListing)
-                pop.dependencies.append(listing)
+                pop.dependencies = listing
 
-
+        
         print("setup done!")
+        self.printPop()
         def timedown(n):
             print("running in", n)
             time.sleep(1)
@@ -100,6 +113,7 @@ class environment():
         self.populations["birds"] = population(500, 450, 100)
         self.populations["worms"] = population(2500, 3000, 400)
         self.populations["birds"].dependencies = [[[[self.populations["worms"],5]],5]]
+        self.printPop()
         #this function is no longer called, the  "setup" function in this class is currently what is run...
         #and sets up the populations based on user input
     
@@ -125,5 +139,6 @@ print(birds.dependencies_calc())
 """
 
 env = environment()
+#env.pop_setup()
 env.setup()
 env.run()
