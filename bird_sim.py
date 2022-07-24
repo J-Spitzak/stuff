@@ -38,7 +38,8 @@ class population():
         #print(importance)
         return final
 
-    def increment(self):
+    def incrementD(self):
+        #incrementD increments based on the dependencies of the population
         pop = self.population.num
         self.population.num += (self.dependencies_calc() / 100) * self.population.stddev
         return pop
@@ -120,9 +121,15 @@ class environment():
     def run(self):
         while True:
             new = self.populations
+            extinct = []
             for population in new:
-                self.populations[population].increment()
+                self.populations[population].incrementD()
                 print(population,  ": " , self.populations[population].population.num)
+                if self.populations[population].population.num <= 0:
+                    print(population, "went extinct")
+                    extinct.append(population)
+            for ex in extinct:
+                self.populations.pop(ex)
             self.populations = new
             time.sleep(1)
                 
@@ -139,6 +146,6 @@ print(birds.dependencies_calc())
 """
 
 env = environment()
-#env.pop_setup()
-env.setup()
+env.pop_setup()
+#env.setup()
 env.run()
