@@ -36,42 +36,56 @@ class particle:
         self.x_left = self.x_right - self.width
         self.y_top = self.y_bottom - self.width
 
+        self.dead = False
+        self.deadzone = 1
+
     def vec_add(self):
-        self.final_force[0] += self.g_force[0]
-        self.final_force[1] += self.g_force[1]
+        if not self.dead:
+            self.final_force[0] += self.g_force[0]
+            self.final_force[1] += self.g_force[1]
+        
+    def checkDeadzone(self):
+        if self.final_force[0] - self.g_force[1] <= self.deadzone and self.final_force[1] - self.g_force[1] <= self.deadzone:
+            self.dead = True
 
     def walls(self):
         '''if self.y <= Y_T or self.y >= Y_B:
             self.final_force[1] *= -1
         if self.x <= X_L or self.x >= X_R:
             self.final_force[0] *= -1'''
-        # <- for walls
+        # ^ for walls
 
         if self.y_bottom >= SCREEN_HEIGHT or self.y_top <= 0:
             self.final_force[1] *= -1
 
             if self.y_top + self.final_force[1] <= 0:
                 self.y_bottom = 1 + self.width
+                self.checkDeadzone()
 
             if self.y_bottom + self.final_force[1] >= SCREEN_HEIGHT:
                 self.y_bottom = SCREEN_HEIGHT - 1
+                self.checkDeadzone()
             
         if self.x_left <= 0 or self.x_right >= SCREEN_WIDTH:
             self.final_force[0] *= -1
 
             if self.x_left + self.final_force[0] <= 0:
                 self.x_right = 1 + self.width
+                self.checkDeadzone()
 
             if self.x_right + self.final_force[0] >= SCREEN_WIDTH:
                 self.x_right = SCREEN_WIDTH - 1
+                self.checkDeadzone()
 
     
     def move(self):
-        self.x_right += self.final_force[0]
-        self.y_bottom += self.final_force[1]
+        if not self.dead:
 
-        self.x_left = self.x_right - self.width
-        self.y_top = self.y_bottom - self.width
+            self.x_right += self.final_force[0]
+            self.y_bottom += self.final_force[1]
+
+            self.x_left = self.x_right - self.width
+            self.y_top = self.y_bottom - self.width
     
     def draw(self):
         
