@@ -1,20 +1,6 @@
 import pygame as pg
 
-run = True
-BLACK = (0,0,0)
-WHITE = (255,255,255)
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 500 
 
-CUBE_WIDTH = 5
-CUBE_OFFSET = 20
-
-X_L = 2 * CUBE_WIDTH + CUBE_OFFSET
-X_R = SCREEN_WIDTH - (CUBE_WIDTH + CUBE_OFFSET)
-Y_B = SCREEN_HEIGHT - (CUBE_WIDTH + CUBE_OFFSET)
-Y_T = 2 * CUBE_WIDTH + CUBE_OFFSET
-
-WIN = pg.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
 
 def invert(list):
     fin = []
@@ -22,7 +8,7 @@ def invert(list):
         fin.append(i * -1)
     return fin
 
-class particle:
+class cube:
     def __init__(self, x, y, width):
         self.x_right = x
         self.y_bottom = y
@@ -48,10 +34,10 @@ class particle:
         if self.final_force[0] - self.g_force[1] <= self.deadzone and self.final_force[1] - self.g_force[1] <= self.deadzone:
             self.dead = True
 
-    def walls(self):
-        '''if self.y <= Y_T or self.y >= Y_B:
+    def walls(self, SCREEN_WIDTH, SCREEN_HEIGHT):
+        '''if self.y <= self.Y_T or self.y >= self.Y_B:
             self.final_force[1] *= -1
-        if self.x <= X_L or self.x >= X_R:
+        if self.x <= self.X_L or self.x >= self.X_R:
             self.final_force[0] *= -1'''
         # ^ for walls
 
@@ -87,48 +73,67 @@ class particle:
             self.x_left = self.x_right - self.width
             self.y_top = self.y_bottom - self.width
     
-    def draw(self):
+    def draw(self, WN):
         
-        pg.draw.rect(WIN, (255, 225, 225), pg.Rect(self.x_left, self.y_top, self.width, self.width))
+        pg.draw.rect(WN, (255, 225, 225), pg.Rect(self.x_left, self.y_top, self.width, self.width))
         
     
-par = particle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 5)
+class window():
 
-def draw_square():
-    pg.draw.rect(WIN, WHITE, pg.Rect(CUBE_OFFSET, CUBE_OFFSET, (SCREEN_WIDTH - (2 * CUBE_OFFSET)), (SCREEN_HEIGHT - (2 * CUBE_OFFSET))))
-    pg.draw.rect(WIN, BLACK, pg.Rect(CUBE_OFFSET + CUBE_WIDTH, CUBE_OFFSET + CUBE_WIDTH, (SCREEN_WIDTH - (2 * CUBE_OFFSET + 2 * CUBE_WIDTH)), (SCREEN_HEIGHT - (2 * CUBE_OFFSET + 2 * CUBE_WIDTH))))
-    #pg.draw.rect(WIN, WHITE, pg.Rect(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,10,10))
+    def __init__(self):
+        self.run = True
+        self.BLACK = (0,0,0)
+        self.WHITE = (255,255,255)
+        self.SCREEN_WIDTH = 500
+        self.SCREEN_HEIGHT = 500 
 
-def main():
-    par.walls()
-    par.vec_add()
-    par.move()
+        self.CUBE_WIDTH = 5
+        self.CUBE_OFFSET = 20
 
-def stuffs():
-    clock = pg.time.Clock()
-    run = True
-    ticks = 0
-    while run:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                run = False
+        self.X_L = 2 * self.CUBE_WIDTH + self.CUBE_OFFSET
+        self.X_R = self.SCREEN_WIDTH - (self.CUBE_WIDTH + self.CUBE_OFFSET)
+        self.Y_B = self.SCREEN_HEIGHT - (self.CUBE_WIDTH + self.CUBE_OFFSET)
+        self.Y_T = 2 * self.CUBE_WIDTH + self.CUBE_OFFSET
 
-        if ticks == 10:
-            WIN.fill(BLACK)
-            #draw_square()
-            main()
-            par.draw()
-            pg.display.update()
-            ticks = 0
+        self.WIN = pg.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT))
+        self.cube = cube(self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 2, 5)
 
-        else:
-            main()
+    def draw_square(self):
+        pg.draw.rect(self.WIN, self.WHITE, pg.Rect(self.CUBE_OFFSET, self.CUBE_OFFSET, (self.SCREEN_WIDTH - (2 * self.CUBE_OFFSET)), (self.SCREEN_HEIGHT - (2 * self.CUBE_OFFSET))))
+        pg.draw.rect(self.WIN, self.BLACK, pg.Rect(self.CUBE_OFFSET + self.CUBE_WIDTH, self.CUBE_OFFSET + self.CUBE_WIDTH, (self.SCREEN_WIDTH - (2 * self.CUBE_OFFSET + 2 * self.CUBE_WIDTH)), (self.SCREEN_HEIGHT - (2 * self.CUBE_OFFSET + 2 * self.CUBE_WIDTH))))
+        #pg.draw.rect(self.WIN, self.WHITE, pg.Rect(self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 2,10,10))
 
-        clock.tick(300)
-        ticks += 1
-        #par.move()
-    
-    pg.quit()
+    def main(self):
+        self.cube.walls(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
+        self.cube.vec_add()
+        self.cube.move()
+
+    def stuffs(self):
+        clock = pg.time.Clock()
+        self.run = True
+        ticks = 0
+        while self.run:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.run = False
+
+            if ticks == 10:
+                self.WIN.fill(self.BLACK)
+                #draw_square()
+                self.main()
+                self.cube.draw(self.WIN)
+                pg.display.update()
+                ticks = 0
+
+            else:
+                self.main()
+
+            clock.tick(300)
+            ticks += 1
+            #cube.move()
+        
+        pg.quit()
 
 if __name__ == "__main__":
-    stuffs()
+    WIN = window()
+    WIN.stuffs()
