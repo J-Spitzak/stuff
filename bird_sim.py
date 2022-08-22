@@ -1,5 +1,12 @@
 import time
 import math
+import random
+
+def mapped_number(accuracy = 100):
+
+    number = random.randint(0, accuracy) / accuracy
+    number += .5
+    return number
 
 class NCurve():
 
@@ -44,8 +51,8 @@ class population():
 
     def increment(self):
         pop = self.population.num
-        self.population.num += math.floor((self.dependencies_calc() / 150) * self.population.stddev)
-        self.population.num -= math.floor(self.predaDeck / 20)
+        self.population.num += math.floor((self.dependencies_calc() / 150) * self.population.stddev) * mapped_number()
+        self.population.num -= math.floor(self.predaDeck / 20) * mapped_number()
         self.predaDeck = 0
         return pop
 
