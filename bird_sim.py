@@ -1,6 +1,7 @@
 import time
 import math
 import random
+import sys
 
 def mapped_number(accuracy = 100):
 
@@ -158,6 +159,29 @@ print(birds.dependencies_calc())
 """
 
 env = environment()
-env.pop_setup()
-#env.setup()
+'''env.pop_setup() # the pre-setup one
+env.setup() #the one where you set it up'''
+
+
+
+
+
+arguments = sys.argv
+
+if ':p' in arguments or ':c' in arguments:
+    if ':p' in arguments:
+        env.pop_setup()
+    if ':c' in arguments:
+        env.setup()
+else:
+    try:
+        print(arguments[1], "is not a valid argument")
+    except:
+        print("an argument must be provided")
+
+    print("possible arguments are: \n :p -> stands for 'pre' uses pre-made test setup \n :c -> stands for 'custom' uses command line utility to create a custom environment")
+    input()
+    quit()
+
+
 env.run()
