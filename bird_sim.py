@@ -51,10 +51,21 @@ class population():
         return final
 
     def increment(self):
+        # this function is the heart of the simulation, it is called on every population in every run instance
+        # it is called in the run method of environment
+
         pop = self.population.num
-        self.population.num += math.floor((self.dependencies_calc() / 150) * self.population.stddev) * mapped_number()
-        self.population.num -= math.floor(self.predaDeck / 20) * mapped_number()
+        #^ variable is created to store the previose population number
+        # so that it can be used by the rest of the simulation
+
+        self.population.num += math.floor((self.dependencies_calc() / 150) * self.population.stddev * mapped_number())
+        # ^ adding the success of dependencies to the population
+        self.population.num -= math.floor((self.predaDeck / 20) * mapped_number())
+        # ^ reducing population by the success of predators
         self.predaDeck = 0
+        # ^ resseting the score for success of the predators
+
+        # returning previose population number to stay consistent 
         return pop
 
     def print(self, name = None):
@@ -133,16 +144,23 @@ class environment():
     
     def run(self):
         while True:
+
             new = self.populations
-            extinct = []
+            # ^ creating new copy of population values to store new values...
+            # isolated from old ones that the simulation is running on
+
+            extinct = [] # list for extinct species
+
             for population in new:
                 self.populations[population].increment()
                 print(population,  ": " , self.populations[population].population.num)
                 if self.populations[population].population.num <= 0:
                     print(population, "went extinct")
                     extinct.append(population)
+
             for ex in extinct:
                 self.populations.pop(ex)
+
             self.populations = new
             time.sleep(1)
                 
