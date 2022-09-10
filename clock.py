@@ -2,22 +2,34 @@ import time
 
 
 
-def alarm(Hour, Minute = 0):
+def alarm(Hour, Minute = 0, NxtDay = True, Hr = int(time.strftime("%H", time.localtime())), Min = int(time.strftime("%M", time.localtime()))):
 
-    now = time.localtime()
-    print(time.strftime("%H:%M:%S", now))
-    Hr = int(time.strftime("%H", now))
-    Min = int(time.strftime("%M", now))
+    print(time.strftime("%H:%M:%S", time.localtime()))
 
-    HrLeft = Hour - Hr
+    
+    
+
+
+    if NxtDay != True:
+        
+        HrLeft = Hour - Hr
+    else:
+        HrLeft = (24 - Hr) + Hour
+
     MinLeft = Minute - Min
+
+
+
     print("time left:", HrLeft, ":", MinLeft)
-    minutesLeft = MinLeft + HrLeft * 60
+    
+
+'''    minutesLeft = MinLeft + HrLeft * 60
+
     time.sleep(minutesLeft * 60)
     while True:
         print("DONE")
-        time.sleep(1)
+        time.sleep(1)'''
 
 
-alarm(18,59)
+alarm(2,59, True)
 
