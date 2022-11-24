@@ -151,6 +151,6 @@ print(birds.dependencies_calc())
 """
 
 env = environment()
-env.pop_setup()
-#env.setup()
+#env.pop_setup()
+env.setup()
 env.run()
