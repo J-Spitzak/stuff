@@ -4,6 +4,8 @@ import math
 
 
 BACKROUND_BLUE = (100,125,150)
+BACKROUND_BLACK = (0,0,0)
+BACKROUND_WHITE = (255,255,255)
 BACKROUND_GREEN = (20,50,35)
 RED = (200,20,20)
 
@@ -119,6 +121,7 @@ class snake():
 
 
     def die(self):
+        print(self.length - 1)
         pg.quit()
         quit()
 
@@ -164,7 +167,7 @@ def backround():
                 xx = x + STEP
             else:
                 xx = x
-            pg.draw.rect(WN,BACKROUND_GREEN,(xx,y,STEP,STEP))
+            pg.draw.rect(WN,BACKROUND_BLUE,(xx,y,STEP,STEP))
 
 
 def stuff():
