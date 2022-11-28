@@ -1,7 +1,7 @@
 import random
 import pygame as pg 
 import math
-
+import sys
 
 BACKROUND_BLUE = (100,125,150)
 BACKROUND_BLACK = (0,0,0)
@@ -146,9 +146,10 @@ snakey = snake(5,5)
 apple = apples()
         
 
-def snakeStuff(tick):
+def snakeStuff(tick, speed):
+
     tick+=1
-    if tick >= 3:
+    if tick >= (11 - speed):
         snakey.move()
         snakey.self_collosion()
         tick = 0
@@ -157,7 +158,23 @@ def snakeStuff(tick):
     snakey.checkWall()
     return tick
 
-def backround():
+def colorMap(args, num, default):
+    try:
+        arg = args[num]
+    except:
+        return default
+    if arg == ":b" or arg == ":B":
+        return BACKROUND_BLUE
+    elif arg == ":g" or arg == ":G":
+        return BACKROUND_GREEN
+    elif arg == ":k" or arg == ":K":
+        return BACKROUND_BLACK
+    elif arg == ":w" or arg == ":W":
+        return BACKROUND_WHITE
+    elif arg == ":r" or arg == ":R":
+        return RED
+
+def backround(color):
     thing = 1
     
     for y in range(0,WN_HEIGHT, STEP):
@@ -167,12 +184,26 @@ def backround():
                 xx = x + STEP
             else:
                 xx = x
-            pg.draw.rect(WN,BACKROUND_BLUE,(xx,y,STEP,STEP))
+            pg.draw.rect(WN,colorMap(color,2, BACKROUND_WHITE),(xx,y,STEP,STEP))
 
 
 def stuff():
     run = True
     tick = 0
+    args = sys.argv
+    #print(args)
+
+
+    try:
+        speed = args[3]
+        speed = int(speed)
+    except:
+        speed = 7
+
+    if speed > 10:
+        print("invalid speed argument, speed must be less than or equal to 10")
+        print("setting speed to 10")
+        speed = 10
 
 
     while run:
@@ -196,11 +227,11 @@ def stuff():
         if keys[pg.K_UP]:
             snakey.body[0].direction = [0,-1]
 
-        WN.fill(BACKROUND_BLUE)    
+        WN.fill(colorMap(args, 1, BACKROUND_BLACK))    
 
-        backround()
+        backround(args)
         apple.draw()
-        tick = snakeStuff(tick)
+        tick = snakeStuff(tick,speed)
 
 
         pg.display.update()
