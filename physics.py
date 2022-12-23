@@ -81,7 +81,6 @@ class cube:
 class window():
 
     def __init__(self):
-        self.run = True
         self.BLACK = (0,0,0)
         self.WHITE = (255,255,255)
         self.SCREEN_WIDTH = 500
@@ -98,6 +97,11 @@ class window():
         self.WIN = pg.display.set_mode((self.SCREEN_WIDTH,self.SCREEN_HEIGHT))
         self.cube = cube(self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 2, 5)
 
+        self.breaks = True
+
+        self.clock = pg.time.Clock()
+        self.ticks = 0
+
     def draw_square(self):
         pg.draw.rect(self.WIN, self.WHITE, pg.Rect(self.CUBE_OFFSET, self.CUBE_OFFSET, (self.SCREEN_WIDTH - (2 * self.CUBE_OFFSET)), (self.SCREEN_HEIGHT - (2 * self.CUBE_OFFSET))))
         pg.draw.rect(self.WIN, self.BLACK, pg.Rect(self.CUBE_OFFSET + self.CUBE_WIDTH, self.CUBE_OFFSET + self.CUBE_WIDTH, (self.SCREEN_WIDTH - (2 * self.CUBE_OFFSET + 2 * self.CUBE_WIDTH)), (self.SCREEN_HEIGHT - (2 * self.CUBE_OFFSET + 2 * self.CUBE_WIDTH))))
@@ -110,12 +114,12 @@ class window():
 
     def stuffs(self):
         clock = pg.time.Clock()
-        self.run = True
+        self.breaks = True
         ticks = 0
-        while self.run:
+        while self.breaks:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    self.run = False
+                    self.breaks = False
 
             if ticks == 10:
                 self.WIN.fill(self.BLACK)
@@ -134,6 +138,38 @@ class window():
         
         pg.quit()
 
+        
+    def run(self):
+        for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    self.breaks = False
+        
+                    
+        if self.ticks == 10:
+                self.WIN.fill(self.BLACK)
+                self.main()
+                self.cube.draw(self.WIN)
+                pg.display.update()
+                self.ticks = 0
+
+        else:
+            self.main()
+
+        self.clock.tick(300)
+        self.ticks += 1
+
+
+
+        
+    def quit(self):
+        pg.quit()
+
+    
+
 if __name__ == "__main__":
     WIN = window()
-    WIN.stuffs()
+
+    while WIN.breaks:
+        WIN.run()
+
+    WIN.quit()
