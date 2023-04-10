@@ -1,3 +1,16 @@
+red = 23
+blue = 24
+green = 25
+
+try:
+    import RPi.GPIO as io
+    io.setup(red, io.OUT)
+    io.setup(blue, io.OUT)
+    io.setup(green, io.OUT)
+
+except:
+    print("does not have IO libraries")
+
 import time
 
 
@@ -32,10 +45,22 @@ def alarm(Hour, Minute = 0, NxtDay = True, Hr = int(time.strftime("%H", time.loc
     minutesLeft = MinLeft + HrLeft * 60
 
     time.sleep(minutesLeft * 60)
-    while True:
-        print("DONE")
-        time.sleep(1)
+    for _ in range(100):
+        try:
+            print("done")
+            io.output(red, io.HIGH)
+            time.sleep(.5)
+        
+            io.output(red, io.LOW)
+            io.output(green, io.HIGH)
+            time.sleep(.5)
+        
+            io.output(green, io.LOW)
+            io.output(blue, io.HIGH)
+            time.sleep(.5)
+            io.output(blue, io.LOW)
+        except:
+            pass
 
-
-alarm(8,57, False )
+alarm(16,55, False )
 
