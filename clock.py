@@ -1,12 +1,9 @@
-red = 23
-blue = 24
-green = 25
 
 try:
-    import RPi.GPIO as io
-    io.setup(red, io.OUT)
-    io.setup(blue, io.OUT)
-    io.setup(green, io.OUT)
+    from gpiozero import LED
+    red = LED(23)
+    blue = LED(24)
+    green = LED(25)
 
 except:
     print("does not have IO libraries")
@@ -48,19 +45,20 @@ def alarm(Hour, Minute = 0, NxtDay = True, Hr = int(time.strftime("%H", time.loc
     for _ in range(100):
         try:
             print("done")
-            io.output(red, io.HIGH)
+            red.on()
             time.sleep(.5)
         
-            io.output(red, io.LOW)
-            io.output(green, io.HIGH)
+            red.off()
+            green.on()
             time.sleep(.5)
         
-            io.output(green, io.LOW)
-            io.output(blue, io.HIGH)
+            green.off()
+            blue.on()
             time.sleep(.5)
-            io.output(blue, io.LOW)
+            blue.off()
+
         except:
             pass
 
-alarm(16,55, False )
+alarm(17,9, False )
 
