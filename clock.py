@@ -62,7 +62,7 @@ class Sub_dude(Node):
         self.c = 1
 
 
-        time.sleep(alarm(17,9, False ) * 60)
+        time.sleep(alarm(22,12, False ) * 60)
 
 
 
@@ -76,25 +76,34 @@ class Sub_dude(Node):
 
 
     def change_color(self):
-        if self.c == 1:
-            blue.off()
-            red.on()
-            self.c += 1
-        elif self.c == 2:
-            red.off()
-            green.on()
-            self.c += 1
-        elif self.c == 3:
-            green.off()
-            blue.on()
-            self.c == 1
+        try:
+
+            if self.c == 1:
+                blue.off()
+                red.on()
+                self.c += 1
+            elif self.c == 2:
+                red.off()
+                green.on()
+                self.c += 1
+            elif self.c == 3:
+                green.off()
+                blue.on()
+                self.c == 1
+
+        except:
+            print("color changed")
 
 
 
     def msg_callback(self, msg: String):
-        red.off()
-        blue.off()
-        green.off()
+        try:
+            red.off()
+            blue.off()
+            green.off()
+        except:
+            print("done")
+
         quit()
 
 
