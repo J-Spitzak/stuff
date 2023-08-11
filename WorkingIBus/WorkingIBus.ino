@@ -105,7 +105,20 @@ void loop() {
   int turn = RH / 2;
 
   if ((forward + turn) > 100){
-    
+    DriveL = 100;
+    DriveR = forward - (100 - turn);
+  }
+  else if ((forward - turn) > 100){
+    DriveR = 100;
+    DriveL = forward - (100 + turn);
+  }
+  else if (turn >= 0){
+    DriveR = forward - turn;
+    DriveL = forward + turn;
+  }
+  else if (turn < 0){
+    DriveR = forward - turn;
+    DriveL = forward + turn;
   }
 
   delay(10);
